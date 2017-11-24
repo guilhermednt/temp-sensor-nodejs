@@ -1,0 +1,15 @@
+{
+  "name": "temp-sensor-node",
+  "version": "1.0.0",
+  "description": "Demo application to showcase the use of node and Arduino-like devices.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "johnny-five": "^0.11.7",
+    "node-fetch": "^1.7.3"
+  }
+}

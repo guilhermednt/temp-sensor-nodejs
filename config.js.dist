@@ -1,0 +1,33 @@
+var config = {}
+
+const SECONDS = 1000
+
+config.led = {
+    pins: {
+        red: 6,
+        green: 5,
+        blue: 3
+    },
+    isAnode: true
+}
+
+config.thermometer = {
+    pin: "A1",
+    // Based on TMP36
+    toCelsius: function (raw) {
+        var mV = this.aref * 1000 * raw / 1023;
+        return Math.round((mV / 10) - 50) / 10 - 10;
+    },
+    freq: 1000
+}
+
+config.historyApi = {
+    endpoint: "temperature history API",
+    key: "Authentication Key",
+    location: "Sensor Location Label",
+    updateInterval: 60 * SECONDS
+}
+
+config.weatherApi = { endpoint: "WEATHER ENDPOINT" }
+
+module.exports = config
