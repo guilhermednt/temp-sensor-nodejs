@@ -1,7 +1,7 @@
 {
   "name": "temp-sensor-node",
   "version": "1.0.0",
-  "description": "Demo application to showcase the use of node and Arduino-like devices.",
+  "description": "Demo application to showcase the use of node and Arduino devices.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
