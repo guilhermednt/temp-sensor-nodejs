@@ -25,7 +25,15 @@ config.historyApi = {
     endpoint: "temperature history API",
     key: "Authentication Key",
     location: "Sensor Location Label",
-    updateInterval: 60 * SECONDS
+    updateInterval: 60 * SECONDS,
+    payload: function(externalTemp, currentStatus) {
+        return {
+            "label": config.historyApi.location,
+            "temperature": currentStatus.temperature,
+            "humidity": currentStatus.humidity,
+            "externalTemp": externalTemp
+        }
+    }
 }
 
 config.weatherApi = { endpoint: "WEATHER ENDPOINT" }

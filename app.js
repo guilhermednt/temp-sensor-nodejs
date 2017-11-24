@@ -41,12 +41,9 @@ async function updateData() {
         return;
     }
     led.updating()
-    const payload = JSON.stringify({
-        "txt_setor": config.historyApi.location,
-        "vlr_temperatura": currentStatus.temperature,
-        "vlr_humidade": currentStatus.humidity,
-        "vlr_temperatura_cidade": await externalTemp()
-    })
+    const payload = JSON.stringify(
+        config.historyApi.payload(await externalTemp(), currentStatus)
+    )
 
     const params = {
         method: 'POST',
