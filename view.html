@@ -1,0 +1,35 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <section>
+            <h1>Temperatura em Tempo Real</h1>
+            <h2><span class="temp">--</span>ºC</h2>
+            <h2><span class="noise">--</span>dB</h2>
+            <h2><span class="wifi">--</span> redes WiFi</h2>
+        </section>
+        <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "api key",
+            authDomain: "APP_NAME.firebaseapp.com",
+            databaseURL: "https://APP_NAME.firebaseio.com",
+            projectId: "APP_NAME",
+            storageBucket: "",
+            messagingSenderId: "SENDER ID"
+          };
+          firebase.initializeApp(config);
+          
+          var sensorLocation = 'SENSOR LOCATION';
+          var database = firebase.database();
+          var tempRef = database.ref('temp/'+sensorLocation);
+          tempRef.on('value', snapshot => {
+              document.querySelector('.temp').innerHTML = snapshot.val().temp;
+              document.querySelector('.noise').innerHTML = snapshot.val().noise;
+              document.querySelector('.wifi').innerHTML = snapshot.val().wifi.length;
+          });
+        </script>
+    </body>
+</html>

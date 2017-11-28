@@ -3,8 +3,11 @@ const StatusLed = require("./status-led")
 const CurrentStatus = require("./current-status")
 const five = require("johnny-five")
 const fetch = require("node-fetch")
+const admin = require("firebase-admin")
+const serviceAccount = require(config.firebase.accountKeyPath)
+const scanner = require('plott-wifi-scanner')
 
-var led
+var led, tempRef, wifiNetworks
 const board = new five.Board()
 const currentStatus = new CurrentStatus()
 
@@ -19,15 +22,31 @@ async function externalTemp() {
 }
 
 board.on("ready", function() {
+    // Setup firebase
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+        databaseURL: config.firebase.databaseURL
+    })
+    tempRef = admin.database().ref("temp/"+config.historyApi.location)
+
     led = new StatusLed(config.led)
     led.intensity(10).off()
 
     const thermometer = new five.Thermometer(config.thermometer);
     thermometer.on("data", function() {
-        currentStatus.temperature = this.C
+        currentStatus.temperature = this.C.toFixed(1)
+        if (tempRef) {
+            tempRef.set({
+                temp: currentStatus.temperature,
+                humid: 123,
+                noise: 15,
+                wifi: wifiNetworks
+            })
+        }
     });
     
     waitToUpdate(500)
+    scanWiFi()
 })
 
 board.on("exit", function() {
@@ -66,6 +85,19 @@ async function updateData() {
         .then(() => {
             waitToUpdate(config.historyApi.updateInterval)
         })
+}
+
+function scanWiFi() {
+    console.log("Scanning wifi...")
+    scanner((err, networks) => {
+        if (err) {
+            console.error(err)
+            return
+        }
+        wifiNetworks = networks
+        console.log(networks.length, "networks found")
+    })
+    setTimeout(scanWiFi, 10000)
 }
 
 function waitToUpdate(time) {
