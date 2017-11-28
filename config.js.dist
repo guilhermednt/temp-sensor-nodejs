@@ -36,6 +36,14 @@ config.historyApi = {
     }
 }
 
+config.firebase = {
+    projectId: "PROJECT ID",
+    apiKey: "YOUR API KEY",
+    authDomain: "PROJECT ID.firebaseapp.com",
+    accountKeyPath: "/path/to/serviceAccountKey.json",
+    databaseURL: "https://PROJECT ID.firebaseio.com"
+}
+
 config.weatherApi = { endpoint: "WEATHER ENDPOINT" }
 
 module.exports = config

@@ -8,11 +8,11 @@ Demo application to showcase the use of node and Arduino devices.
 
 2. Assemble your board as described in the diagram bellow:
 
-Arduino Uno:
+### Arduino Uno:
 
 ![Components diagram for Arduino Uno](./temp-sensor-nodejs_bb.png)
 
-Arduino Nano:
+### Arduino Nano:
 
 ![Components diagram for Arduino Nano](./temp-sensor-nodejs_nano_bb.png)
 
